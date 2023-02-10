@@ -8,7 +8,7 @@ LIBFT		= libft
 
 MLX			= mlx
 
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -lm
 
 INCLUDE		= include
 
