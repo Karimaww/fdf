@@ -1,14 +1,16 @@
 CC			= gcc
 
-NAME		= fdfbis
+NAME		= fdf
 
-SOURCES =	main.c\
+SOURCES =	main.c		\
+			matrices.c	\
+			parsing.c	\
 
 LIBFT		= libft
 
 MLX			= mlx
 
-CFLAGS		= -Wall -Wextra -Werror -lm
+CFLAGS		= -Wall -Wextra -Werror
 
 INCLUDE		= include
 
@@ -31,7 +33,7 @@ obj:
 	mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -L $(LIBFT) -L $(MLX) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(OBJS) -L $(LIBFT) -L $(MLX) -lmlx -lft -framework OpenGL -framework AppKit -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE)/fdf.h
 	$(CC) $(CFLAGS) -I $(INCLUDE) -Imlx -c $< -o $@
