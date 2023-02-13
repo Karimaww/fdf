@@ -1,14 +1,15 @@
 #ifndef FDF_H
 # define FDF_H
+# include "../libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
 # include "../mlx/mlx.h"
-# include "../libft/libft.h"
 # include <stdbool.h>
 
-typedef struct	s_data {
+typedef struct	s_data
+{
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -16,10 +17,17 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
-typedef struct s_point {
-	int		z;
-	int		color;
-	t_point	*next;
+typedef struct	s_point
+{
+	int				z;
+	int				color;
+	struct s_point	*next;
 }				t_point;
 
+int	parser(char *file);
+t_point	**init_matrix(int sizex, int sizey);
+t_point	**put_matrix(t_point *lst, int sizex, int sizey);
+int	put_arg(char *line, t_point *lst);
+t_point	*put_point_front(char **el, t_point *lst);
+t_point	**read_file(int fd);
 #endif
