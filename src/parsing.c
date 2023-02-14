@@ -15,13 +15,14 @@ t_point	*put_point_front(char **el, t_point *lst)
 {
 	t_point	*point;
 
-	point = (t_point *)malloc(sizeof(t_point));
-	if (!point)
-		return (NULL);
+	//point = (t_point *)malloc(sizeof(t_point));
+	// if (!point)
+	// 	return (NULL);
+	point = 0;
 	point->z = ft_atoi(el[0]);
 	point->next = NULL;
 	if (el[1])
-		point->color = ft_atoi(el[1]);
+		point->color = hex_to_trgb(el[1] + 3);
 	else
 		point->color = 0;
 	if (!lst)
@@ -76,6 +77,7 @@ t_point	**read_file(int fd)
 	lst = NULL;
 	while (line)
 	{
+		printf("%s\n", line);
 		sizex = put_arg(line, lst);
 		if (!sizex)
 			return (NULL);
@@ -85,12 +87,17 @@ t_point	**read_file(int fd)
 	return (put_matrix(lst, sizex, sizey));
 }
 
-int parser(char *file)
+t_point	**parser(char *file)
 {
-	int	f;
+	int		f;
+	t_point	**mat;
+
 	f = open(file, O_RDONLY);
-	if (!f || !read_file(f))
-		return (write(2, "Error\n", 6), 0);
+	if (!f)
+		return (write(2, "Error\n", 6), NULL);
+	mat = read_file(f);
+	if (!mat)
+		return (write(2, "Error\n", 6), NULL);
 	close(f);
-	return (1);
+	return (mat);
 }

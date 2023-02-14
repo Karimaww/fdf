@@ -7,6 +7,7 @@
 # include <math.h>
 # include "../mlx/mlx.h"
 # include <stdbool.h>
+# include <stdio.h>
 
 typedef struct	s_data
 {
@@ -24,10 +25,13 @@ typedef struct	s_point
 	struct s_point	*next;
 }				t_point;
 
-int	parser(char *file);
+t_point	**parser(char *file);
 t_point	**init_matrix(int sizex, int sizey);
 t_point	**put_matrix(t_point *lst, int sizex, int sizey);
-int	put_arg(char *line, t_point *lst);
+int		put_arg(char *line, t_point *lst);
 t_point	*put_point_front(char **el, t_point *lst);
 t_point	**read_file(int fd);
+void	free_mat(t_point **mat, int sizey);
+int		hex_to_trgb(char *value);
+void	print_mat(t_point **mat);
 #endif

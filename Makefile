@@ -5,12 +5,13 @@ NAME		= fdf
 SOURCES =	main.c		\
 			matrices.c	\
 			parsing.c	\
+			colors.c	\
 
 LIBFT		= libft
 
 MLX			= mlx
 
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g3
 
 INCLUDE		= include
 

@@ -2,7 +2,12 @@
 
 int	main(int ac, char **av)
 {
-	if (ac != 2 || !parser(av[1]))
+	t_point	**mat;
+	if (ac != 2)
 		return (write(2, "Error\n", 6), 1);
+	mat = parser(av[1]);
+	if (!mat)
+		return (write(2, "Error\n", 6), 1);
+	print_mat(mat);
 	return (0);
 }

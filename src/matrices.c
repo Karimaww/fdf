@@ -29,17 +29,43 @@ t_point	**put_matrix(t_point *lst, int sizex, int sizey)
 	mat = init_matrix(sizex, sizey);
 	i = sizey - 1;
 	j = sizex - 1;
+	tmp = lst;
 	while (mat && mat[i] && i >= 0)
 	{
 		while (lst && j >= 0)
 		{
-			mat[i][j] = *lst;
-			tmp = lst->next;
-			free(lst);
-			lst = tmp;
+			mat[i][j] = *tmp;
+			tmp = tmp->next;
 			j--;
 		}
 		i--;
 	}
 	return (mat);
+}
+
+void	print_mat(t_point **mat)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < 11)
+	{
+		while (j < 19)
+		{
+			printf("\t%d", mat[i][j].z);
+		}
+		printf("\n");
+	}
+}
+
+void	free_mat(t_point **mat, int sizey)
+{
+	if (mat)
+	{
+		while (sizey-- > 0)
+			free(mat[sizey]);
+		free(mat);
+	}
 }
