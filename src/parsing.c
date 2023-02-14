@@ -5,9 +5,10 @@ void	arg_free(char **arg)
 	int	i;
 
 	i = 0;
-	while(arg[i])
+	while(arg && arg[i])
 		free(arg[i++]);
-	free(arg);
+	if (arg)
+		free(arg);
 	return ;
 }
 
@@ -19,7 +20,7 @@ t_point	*put_point_front(char **el, t_point *lst)
 	if (!point)
 	 	return (NULL);
 	point->z = ft_atoi(el[0]);
-	point->next = NULL;
+	point->next = lst;
 	if (el[1])
 		point->color = hex_to_trgb(el[1] + 3);
 	else
@@ -44,6 +45,7 @@ int	put_arg(char *line, t_point *lst)
 	arg = ft_split(line, ' ');
 	if (!arg)
 	{
+		printf("ayo\n");
 		arg_free(arg);
 		return (0);
 	}
@@ -52,6 +54,7 @@ int	put_arg(char *line, t_point *lst)
 		el = ft_split(arg[i], ',');
 		if (!el)
 		{
+			printf("here\n");
 			free(line);
 			arg_free(arg);
 			return (0);
@@ -59,7 +62,7 @@ int	put_arg(char *line, t_point *lst)
 		lst = put_point_front(el, lst);
 		i++;
 	}
-	free(line);
+	//free(line);
 	arg_free(arg);
 	return (i);
 }
@@ -89,9 +92,12 @@ t_point	**read_file(int fd)
 	lst = init_lst();
 	while (line)
 	{
+		printf("\nligne 1: %s", line);
 		sizex = put_arg(line, lst);
 		if (!sizex)
 			return (NULL);
+		free(line);
+		printf("ligne 2: %s\n", line);
 		line = get_next_line(fd);
 		sizey++;
 	}

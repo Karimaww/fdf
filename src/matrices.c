@@ -33,8 +33,9 @@ t_point	**put_matrix(t_point *lst, int sizex, int sizey)
 	tmp = lst;
 	while (mat && mat[i] && i >= 0)
 	{
-		while (lst && j >= 0)
+		while (tmp && j >= 0)
 		{
+			printf("This is point z: %d\n", tmp->z);
 			mat[i][j] = *tmp;
 			tmp = tmp->next;
 			j--;
@@ -53,11 +54,15 @@ void	print_mat(t_point **mat)
 	j = 0;
 	while (i < 11)
 	{
+
 		while (j < 18)
 		{
 			printf("\t%d", mat[i][j].z);
+			j++;
 		}
 		printf("\n");
+		i++;
+		j = 0;
 	}
 }
 
