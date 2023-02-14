@@ -15,10 +15,9 @@ t_point	*put_point_front(char **el, t_point *lst)
 {
 	t_point	*point;
 
-	//point = (t_point *)malloc(sizeof(t_point));
-	// if (!point)
-	// 	return (NULL);
-	point = 0;
+	point = (t_point *)malloc(sizeof(t_point));
+	if (!point)
+	 	return (NULL);
 	point->z = ft_atoi(el[0]);
 	point->next = NULL;
 	if (el[1])
@@ -62,7 +61,20 @@ int	put_arg(char *line, t_point *lst)
 	}
 	free(line);
 	arg_free(arg);
-	return (i - 1);
+	return (i);
+}
+
+t_point	*init_lst()
+{
+	t_point *lst;
+
+	lst = (t_point *)malloc(sizeof(t_point));
+	if (!lst)
+		return (NULL);
+	lst->color = 0;
+	lst->z = 0;
+	lst->next = NULL;
+	return (lst);
 }
 
 t_point	**read_file(int fd)
@@ -74,16 +86,16 @@ t_point	**read_file(int fd)
 
 	sizey = 0;
 	line = get_next_line(fd);
-	lst = NULL;
+	lst = init_lst();
 	while (line)
 	{
-		printf("%s\n", line);
 		sizex = put_arg(line, lst);
 		if (!sizex)
 			return (NULL);
 		line = get_next_line(fd);
 		sizey++;
 	}
+	printf("sizex: %d\nsizey: %d\n", sizex, sizey);
 	return (put_matrix(lst, sizex, sizey));
 }
 

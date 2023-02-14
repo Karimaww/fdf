@@ -26,6 +26,7 @@ t_point	**put_matrix(t_point *lst, int sizex, int sizey)
 	int		i;
 	int		j;
 
+	printf("sizex: %d\nsizey: %d\n", sizex, sizey);
 	mat = init_matrix(sizex, sizey);
 	i = sizey - 1;
 	j = sizex - 1;
@@ -52,7 +53,7 @@ void	print_mat(t_point **mat)
 	j = 0;
 	while (i < 11)
 	{
-		while (j < 19)
+		while (j < 18)
 		{
 			printf("\t%d", mat[i][j].z);
 		}
