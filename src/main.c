@@ -8,7 +8,7 @@ void	print_map(t_map *map)
 	{
 		while (x < map->sizex)
 		{
-			printf(" %d ", map->map[y][x].z);
+			printf("%d\t", map->map[y][x].z);
 			x++;
 		}
 		printf("\n");

@@ -1,43 +1,5 @@
 #include "../include/parser.h"
 
-void	print_map_me(t_point **map, int x, int y);
-t_point	**copy_map(t_point **src, t_point **dest, int x, int y)
-{
-	int i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	if (!src || !dest)
-		return (NULL);
-	while (src && i < y && src[i])
-	{
-		while (dest && j < x && dest[i])
-		{
-			dest[i][j].z = src[i][j].z;
-			dest[i][j].color = src[i][j].color;
-			j++;
-		}
-		j = 0;
-		i++;
-	}
-	return (dest);
-}
-
-void	free_map(t_point **map)
-{
-	int	i;
-
-	i = 0;
-	while (map && map[i])
-	{
-		free(map[i]);
-		i++;
-	}
-	if (map)
-		free(map);
-}
-
 void	print_map_me(t_point **map, int x, int y)
 {
 	int i, j;
@@ -80,16 +42,6 @@ t_point **init_point_map(t_point **map, int sizex, int sizey)
 	return (new_map);
 }
 
-int		len_tab(char **tab)
-{
-	int i;
-
-	i = 0;
-	while (tab && tab[i])
-		i++;
-	return (i);
-}
-
 void	fill_map(t_map *map, char *line, int x, int y)
 {
 	t_point	point;
@@ -100,11 +52,8 @@ void	fill_map(t_map *map, char *line, int x, int y)
 	i = 0;
 	full = ft_split(line, ' ');
 	map->map = init_point_map(map->map, x, y);
-	print_map_me(map->map, map->sizex, map->sizey);
-	printf("---------------------------------------------\n");
-	while (full && full[i] && i < x)
+	while (full && i < x && full[i])
 	{
-		printf("full[%d] : %s\n", i, full[i]);
 		sep = ft_split(full[i], ',');
 		point.z = ft_atoi(sep[0]);
 		if (sep[1])
@@ -112,22 +61,8 @@ void	fill_map(t_map *map, char *line, int x, int y)
 		else
 			point.color = 0;
 		map->map[y - 1][i] = point;
-		printf("map->map[%d][%d] : %d\n", y - 1, i, map->map[y - 1][i].z);
 		i++;
 	}
-}
-
-void	free_split(char **str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
 }
 
 void	read_map(t_map	*map, int f)
@@ -144,6 +79,7 @@ void	read_map(t_map	*map, int f)
 	{
 		map->sizey += 1;
 		fill_map(map, line, map->sizex, map->sizey);
+		free(line);
 		line = get_next_line(f);
 	}
 }
