@@ -1,121 +1,158 @@
-#include "../include/fdf.h"
+#include "../include/parser.h"
 
-void	arg_free(char **arg)
+t_point	**copy_map(t_point **src, t_point **dest, int x, int y)
+{
+	int i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (!src || !dest)
+		return (NULL);
+	while (src[i] && i < y)
+	{
+		while (j < x)
+		{
+			printf("ay\n");
+			dest[i][j].z = src[i][j].z;
+			dest[i][j].color = src[i][j].color;
+			printf("ay\n");
+			j++;
+		}
+		j = 0;
+		i++;
+		printf("oy\n");
+	}
+	return (dest);
+}
+
+void	free_map(t_point **map)
 {
 	int	i;
 
 	i = 0;
-	while(arg && arg[i])
-		free(arg[i++]);
-	if (arg)
-		free(arg);
-	return ;
-}
-
-t_point	*put_point_front(char **el, t_point *lst)
-{
-	t_point	*point;
-
-	point = (t_point *)malloc(sizeof(t_point));
-	if (!point)
-	 	return (NULL);
-	point->z = ft_atoi(el[0]);
-	point->next = lst;
-	if (el[1])
-		point->color = hex_to_trgb(el[1] + 3);
-	else
-		point->color = 0;
-	if (!lst)
-		lst = point;
-	else
+	while (map && map[i])
 	{
-		point->next = lst;
-		lst = point;
-	}
-	return (lst);
-}
-
-int	put_arg(char *line, t_point *lst)
-{
-	char	**arg;
-	char	**el;
-	int		i;
-
-	i = 0;
-	arg = ft_split(line, ' ');
-	if (!arg)
-	{
-		printf("ayo\n");
-		arg_free(arg);
-		return (0);
-	}
-	while (arg && arg[i])
-	{
-		el = ft_split(arg[i], ',');
-		if (!el)
-		{
-			printf("here\n");
-			free(line);
-			arg_free(arg);
-			return (0);
-		}
-		lst = put_point_front(el, lst);
+		free(map[i]);
 		i++;
 	}
-	//free(line);
-	arg_free(arg);
+	if (map)
+		free(map);
+}
+
+void	print_map_me(t_point **map, int x, int y)
+{
+	int i, j;
+	i = 0, j=0;
+
+	while (i < y)
+	{
+		while (j < x)
+		{
+			printf("map[i][j].z : %d\nmap[i][j].color : %d\n", map[i][j].z,map[i][j].color);
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	return;
+}
+
+t_point **init_point_map(t_point **map, int sizex, int sizey)
+{
+	int	i;
+	int j;
+	t_point	**new_map;
+
+	i = 0;
+	j = 0;
+	new_map = (t_point **) malloc(sizeof(t_point *) * sizey);
+	if (!new_map)
+		return (NULL);
+	while (new_map && i < sizey)
+	{
+		new_map[i] = (t_point *) malloc(sizeof(t_point) * sizex);
+		if (!new_map[i])
+			return (NULL);
+		while (new_map[i] && j < sizex)
+		{
+			new_map[i][j].z = 0;
+			new_map[i][j].color = 0;
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	if (map == NULL)
+	{
+		printf("here??\n");
+		new_map = copy_map(map, new_map, sizex, sizey);
+		free_map(map);
+	}
+	printf("here: \n");
+	//print_map_me(new_map, sizex, sizey);
+	return (new_map);
+}
+
+int		len_tab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab && tab[i])
+		i++;
 	return (i);
 }
 
-t_point	*init_lst()
+void	fill_map(t_map *map, char *line, int x, int y)
 {
-	t_point *lst;
+	t_point	point;
+	char	**full;
+	char	**sep;
+	int		i;
 
-	lst = (t_point *)malloc(sizeof(t_point));
-	if (!lst)
-		return (NULL);
-	lst->color = 0;
-	lst->z = 0;
-	lst->next = NULL;
-	return (lst);
+	i = 0;
+	full = ft_split(line, ' ');
+	//point = malloc(sizeof(t_point));
+	map->map = init_point_map(map->map, x, y);
+	while (full && full[i] && i < x)
+	{
+		sep = ft_split(full[i], ',');
+		point.z = ft_atoi(full[0]);
+		if (sep[1])
+			point.color = hex_to_trgb(sep[1] + 3);
+		else
+			point.color = 0;
+		map->map[y - 1][i] = point;
+		i++;
+	}
 }
 
-t_point	**read_file(int fd)
+void	read_map(t_map	*map, int f)
 {
 	char	*line;
-	int		sizex;
-	int		sizey;
-	t_point	*lst;
 
-	sizey = 0;
-	line = get_next_line(fd);
-	lst = init_lst();
+	line = get_next_line(f);
+	map->sizey = 0;
 	while (line)
 	{
-		printf("\nligne 1: %s", line);
-		sizex = put_arg(line, lst);
-		if (!sizex)
-			return (NULL);
-		free(line);
-		printf("ligne 2: %s\n", line);
-		line = get_next_line(fd);
-		sizey++;
+		map->sizex = len_tab(ft_split(line, ' '));
+		map->sizey += 1;
+		fill_map(map, line, map->sizex, map->sizey);
+		line = get_next_line(f);
 	}
-	printf("sizex: %d\nsizey: %d\n", sizex, sizey);
-	return (put_matrix(lst, sizex, sizey));
 }
 
-t_point	**parser(char *file)
+t_map	*parser(const char *file)
 {
+	t_map	*map;
 	int		f;
-	t_point	**mat;
 
 	f = open(file, O_RDONLY);
 	if (!f)
 		return (write(2, "Error\n", 6), NULL);
-	mat = read_file(f);
-	if (!mat)
-		return (write(2, "Error\n", 6), NULL);
+	map = (t_map*)malloc(sizeof(t_map));
+	read_map(map, f);
 	close(f);
-	return (mat);
+	return (map);
 }
