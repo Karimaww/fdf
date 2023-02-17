@@ -15,3 +15,9 @@
 
 Axis x : columns  
 Axis y : lines
+
+## Taches a faire
+- free fdf
+- free map
+- check valgrind
+- norminette

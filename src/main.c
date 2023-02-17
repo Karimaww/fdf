@@ -8,7 +8,7 @@ void	print_map(t_map *map)
 	{
 		while (x < map->sizex)
 		{
-			printf("%d\t", map->map[y][x].z);
+			printf("%d ", map->map[y][x].z);
 			x++;
 		}
 		printf("\n");
@@ -20,12 +20,13 @@ void	print_map(t_map *map)
 int	main(int ac, char **av)
 {
 	t_map	*map;
+
 	if (ac != 2)
 		return (write(2, "Error\n", 6), 1);
 	map = parser(av[1]);
+	if (!map)
+		return (write(2, "Error\n", 6), 1);
 	print_map(map);
-	//if (!map)
-	//	return (write(2, "Error\n", 6), 1);
-	init_mlx_me();
+	init_fdf(map);
 	return (0);
 }

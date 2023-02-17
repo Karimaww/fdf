@@ -1,4 +1,4 @@
-#include "../include/parser.h"
+#include "../include/fdf.h"
 
 void	print_map_me(t_point **map, int x, int y)
 {
@@ -9,7 +9,7 @@ void	print_map_me(t_point **map, int x, int y)
 	{
 		while (j < x)
 		{
-			printf("\t%d %d", map[i][j].z,map[i][j].color);
+			printf("%d %d\t", map[i][j].z,map[i][j].color);
 			j++;
 		}
 		j = 0;
@@ -59,7 +59,7 @@ void	fill_map(t_map *map, char *line, int x, int y)
 		if (sep[1])
 			point.color = hex_to_trgb(sep[1] + 3);
 		else
-			point.color = 0;
+			point.color = DEFAULT_COLOR;
 		map->map[y - 1][i] = point;
 		i++;
 	}
@@ -98,5 +98,6 @@ t_map	*parser(const char *file)
 	map->sizey = 0;
 	read_map(map, f);
 	close(f);
+	print_map_me(map->map, map->sizex, map->sizey);
 	return (map);
 }

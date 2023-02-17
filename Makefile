@@ -2,12 +2,13 @@ CC			= gcc
 
 NAME		= fdf
 
-SOURCES =	main.c		\
-			matrices.c	\
-			parsing.c	\
-			colors.c	\
+SOURCES =	main.c			\
+			matrices.c		\
+			parsing.c		\
+			colors.c		\
 			parsing_utils.c \
-			line.c	\
+			line.c			\
+
 
 LIBFT		= libft
 
@@ -38,7 +39,7 @@ obj:
 $(NAME): $(OBJS)
 	$(CC) $(OBJS) -L $(LIBFT) -L $(MLX) -lmlx -lft -framework OpenGL -framework AppKit -o $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE)/fdf.h
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE)/fdf.h $(INCLUDE)/colors.h 
 	$(CC) $(CFLAGS) -I $(INCLUDE) -Imlx -c $< -o $@
 
 bonus: $(NAME)

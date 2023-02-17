@@ -1,49 +1,55 @@
-#include "../include/line.h"
+#include "../include/fdf.h"
 
-void drawline(t_data img, int x0, int y0, int x1, int y1)  
-{	
-	int dx, dy, p, x, y; 
-	dx=x1-x0;  
-	dy=y1-y0;  
-	x=x0;  
-	y=y0;  
-	p=2*dy-dx;  
-	while(x<x1)  
-	{  
-		if(p>=0)  
-		{  
-			my_mlx_pixel_put(&img, x, y, 0x00FF0000);
-			y=y+1;  
-			p=p+2*dy-2*dx;  
-		}  
-		else  
-		{  
-			putpixel(x,y,7);  
-			p=p+2*dy;}  
-			x=x+1;  
-		}  
-} 
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	pixel_put(t_mlx *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = data->addr + (y * data->linel + x * (data->bpp / 8));
 	*(unsigned int*)dst = color;
 }
 
-void	init_mlx_me()
-{
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+void drawline(t_fdf *fdf, int x0, int y0, int x1, int y1)  
+{  
+	int dx;
+	int	dy;
+	int	p;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 800, 500, "Hello world!");
-	img.img = mlx_new_image(mlx, 800, 500);
-	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length,
-								&img.endian);
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	dx = x1 - x0;  
+	dy = y1 - y0;   
+	p = 2 * dy - dx;  
+	while (x0 < x1)  
+	{  
+		if( p >= 0)  
+		{  
+			pixel_put(fdf->mlx.img, x0, y0, fdf->map.map[x0][y0].color);
+			y0 = y0 + 1;  
+			p = p + 2 * dy - 2 * dx;  
+		}  
+		else  
+		{  
+			pixel_put(fdf->mlx.img, x0, y0, fdf->map.map[x0][y0].color);
+			p = p + 2 * dy;   
+		} 
+		x0 = x0 + 1;
+	}
+}
+
+t_fdf	*init_fdf(t_map *map)
+{
+	void	*mlx_win;
+	t_fdf	*fdf;
+
+	fdf = (t_fdf *)malloc(sizeof(t_fdf));
+	if (!fdf)
+		return (NULL);
+	fdf->map = *map;
+	fdf->mlx.mlx = mlx_init();
+	mlx_win = mlx_new_window(fdf->mlx.mlx, 800, 500, "Hello world!");
+	fdf->mlx.img = mlx_new_image(fdf->mlx.mlx, 800, 500);
+	fdf->mlx.addr = mlx_get_data_addr(fdf->mlx.img, &fdf->mlx.bpp, &fdf->mlx.linel,
+								&fdf->mlx.endian);
+	drawline(fdf, 0, 0, 1, 0); 
+	mlx_put_image_to_window(fdf->mlx.mlx, mlx_win, fdf->mlx.img, 0, 0);
+	mlx_loop(fdf->mlx.mlx);
+	return (fdf);
 }

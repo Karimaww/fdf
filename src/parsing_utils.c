@@ -1,4 +1,4 @@
-#include "../include/parser.h"
+#include "../include/fdf.h"
 
 t_point	**copy_map(t_point **src, t_point **dest, int x, int y)
 {

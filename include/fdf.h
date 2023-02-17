@@ -8,17 +8,52 @@
 # include "../mlx/mlx.h"
 # include <stdbool.h>
 # include <stdio.h>
-# include "parser.h"
 # include "colors.h"
-# include "line.h"
 
-typedef struct	s_data
+# define DEFAULT_COLOR 0x00000000
+
+typedef struct	s_point
 {
+	int	z;
+	int	color;
+}				t_point;
+
+typedef struct	s_map
+{
+	int		sizex;
+	int		sizey;
+	t_point	**map;
+}				t_map;
+
+typedef struct	s_mlx
+{
+	void	*mlx;
 	void	*img;
 	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
+	int		bpp;
+	int		linel;
 	int		endian;
-}				t_data;
+}	t_mlx;
+
+typedef struct	s_fdf
+{
+	t_mlx	mlx;
+	t_map	map;
+}	t_fdf;
+
+/*-----parser utils----*/
+t_map	*parser(const char *file);
+void	fill_map(t_map *map, char *line, int x, int y);
+void	read_map(t_map	*map, int f);
+t_map	*parser(const char *file);
+t_point	**copy_map(t_point **src, t_point **dest, int x, int y);
+int		len_tab(char **tab);
+void	free_split(char **str);
+void	free_map(t_point **map);
+
+/*-----line utils----*/
+t_fdf	*init_fdf(t_map *map);
+void	pixel_put(t_mlx *mlx, int x, int y, int color);
+void	drawline(t_fdf *fdf, int x0, int y0, int x1, int y1);
 
 #endif
