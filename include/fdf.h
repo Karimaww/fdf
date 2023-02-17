@@ -10,6 +10,7 @@
 # include <stdio.h>
 # include "parser.h"
 # include "colors.h"
+# include "line.h"
 
 typedef struct	s_data
 {

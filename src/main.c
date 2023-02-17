@@ -26,5 +26,6 @@ int	main(int ac, char **av)
 	print_map(map);
 	//if (!map)
 	//	return (write(2, "Error\n", 6), 1);
+	init_mlx_me();
 	return (0);
 }

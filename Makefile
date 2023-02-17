@@ -6,7 +6,8 @@ SOURCES =	main.c		\
 			matrices.c	\
 			parsing.c	\
 			colors.c	\
-			parsing_utils.c 
+			parsing_utils.c \
+			line.c	\
 
 LIBFT		= libft
 
