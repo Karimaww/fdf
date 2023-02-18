@@ -10,7 +10,7 @@
 # include <stdio.h>
 # include "colors.h"
 
-# define DEFAULT_COLOR 0x00000000
+# define DEFAULT_COLOR 0xFFFFFF
 
 typedef struct	s_point
 {
