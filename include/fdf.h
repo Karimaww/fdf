@@ -10,10 +10,13 @@
 # include <stdio.h>
 # include "colors.h"
 
-# define DEFAULT_COLOR 0xFFFFFF
+# define DEFAULT_COLOR 0x0000FF
+# define PI 3.141592654
 
 typedef struct	s_point
 {
+	int	x;
+	int	y;
 	int	z;
 	int	color;
 }				t_point;

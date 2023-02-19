@@ -21,3 +21,5 @@ Axis y : lines
 - free map
 - check valgrind
 - norminette
+
+- check taille de la fenetre
