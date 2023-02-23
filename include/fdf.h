@@ -13,6 +13,19 @@
 # define DEFAULT_COLOR 0x0000FF
 # define PI 3.141592654
 
+typedef struct	s_vec2
+{
+	int			x;
+	int			y;
+}				t_vec2;
+
+typedef struct	s_pixel
+{
+	int			x;
+	int			y;
+	int			color;
+}				t_pixel;
+
 typedef struct	s_point
 {
 	int	z;
@@ -34,6 +47,7 @@ typedef struct	s_mlx
 	int		bpp;
 	int		linel;
 	int		endian;
+	t_vec2	win_size;
 }	t_mlx;
 
 typedef struct	s_fdf
@@ -55,6 +69,8 @@ void	free_map(t_point **map);
 /*-----line utils----*/
 t_fdf	*init_fdf(t_map *map);
 void	pixel_put(t_mlx *mlx, int x, int y, int color);
-void	drawline(t_fdf *fdf, int x0, int y0, int x1, int y1);
-
+//void	draw_line(t_fdf *fdf, t_pixel p1, t_pixel p2);
+void	draw_line(t_fdf *fdf, t_pixel *p1, t_pixel *p2);
+void	draw_fdf(t_fdf *fdf);
+void	draw_between(t_fdf *fdf, t_vec2 v1, t_vec2 v2);
 #endif

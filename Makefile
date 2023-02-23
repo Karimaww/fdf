@@ -2,12 +2,13 @@ CC			= gcc
 
 NAME		= fdf
 
-SOURCES =	main.c			\
-			matrices.c		\
-			parsing.c		\
-			colors.c		\
+SOURCES =	colors.c		\
+			draw_fdf.c		\
+			draw_line.c		\
+			main.c			\
 			parsing_utils.c \
-			line.c			\
+			parsing.c		\
+			projection.c	\
 
 
 LIBFT		= libft

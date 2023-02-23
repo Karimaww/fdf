@@ -23,3 +23,6 @@ Axis y : lines
 - norminette
 
 - check taille de la fenetre
+
+- ajouter la couleur generale
+- ajouter zoom dans la structure (projection.c)
