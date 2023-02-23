@@ -60,8 +60,6 @@ void	fill_map(t_map *map, char *line, int x, int y)
 			point.color = hex_to_trgb(sep[1] + 3);
 		else
 			point.color = DEFAULT_COLOR;
-		point.y = y - 1;
-		point.x = i;
 		map->map[y - 1][i] = point;
 		i++;
 	}

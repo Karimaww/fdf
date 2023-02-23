@@ -8,37 +8,27 @@ void	pixel_put(t_mlx *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-t_point	centroid(t_map map)
+int	centroid_z(t_map map)
 {
-	printf("SIZEY : %d\n", map.sizey);
-	printf("SIZEX : %d\n", map.sizex);
-	t_point	centroid;
-	int		i;
-	int		j;
+	int	i;
+	int	j;
+	int	z;
 
 	i = 0;
 	j = 0;
-	centroid.x = 0;
-	centroid.y = 0;
-	centroid.y = 0;
+	z = 0;
 	while (i < map.sizey)
 	{
-		printf("yo\n");
 		while (j < map.sizex)
 		{
-			printf("j : %d\n", j);
-			centroid.x += map.map[i][j].x;
-			centroid.y += map.map[i][j].y;
-			centroid.z += map.map[i][j].z;
+			z += map.map[i][j].z;
 			j++;
 		}
 		j = 0;
 		i++;
 	}
-	centroid.x /= map.sizex * map.sizey;
-	centroid.y /= map.sizex * map.sizey;
-	centroid.z /= map.sizex * map.sizey;
-	return centroid;
+	z /= map.sizex * map.sizey;
+	return z;
 }
 
 void	lineLow(t_fdf *fdf, int x0, int y0, int x1, int y1)
@@ -123,33 +113,44 @@ void	draw_mat(t_fdf *fdf)
 {
 	int	i;
 	int	j;
+	double sx, sy;
 
-	i = 50;
-	j = 50;
-	while (i < 500)
+	sy = 1000/ fdf->map.sizey;
+	i = sy;
+	sx = 1000/fdf->map.sizex;
+	j = sx;
+	printf("SX :%f\n", sx);
+	while (i < 1000/2)
 	{
-		while (j < 500)
+		while (j < 1000/2)
 		{
-			drawline(fdf, j, i, j + 50, i);
-			drawline(fdf, j, i, j, i + 50);
-			j += 50;
+			drawline(fdf, j, i, j + sx, i);
+			drawline(fdf, j, i, j, i + sy);
+			j += sx;
 		}
-		j = 50;
-		i += 50;
+		j = sx;
+		i += sy;
 	}
-	i = 50;
-	while (i < 500)
+	i = sy;
+	while (i < 1000/2)
 	{
-		drawline(fdf, 500, i, 500, i + 50);
-		drawline(fdf, i, 500, i + 50, 500);
-		i += 50;
+		drawline(fdf, i, 1000/2, i + sy, 1000/2);
+		i += sy;
 	}
+	j = sx;
+	while (j < 1000/2)
+	{
+		drawline(fdf, 1000/2, j, 1000/2, j + sx);
+		j += sx;
+	}
+	printf("SY : %f\n", sy);
 }
 
 t_fdf	*init_fdf(t_map *map)
 {
 	void	*mlx_win;
 	t_fdf	*fdf;
+	//int		centre_z, centre_x, centre_y;
 
 	fdf = (t_fdf *)malloc(sizeof(t_fdf));
 	if (!fdf)
@@ -160,10 +161,12 @@ t_fdf	*init_fdf(t_map *map)
 	fdf->mlx.img = mlx_new_image(fdf->mlx.mlx, 1000, 1000);
 	fdf->mlx.addr = mlx_get_data_addr(fdf->mlx.img, &(fdf->mlx.bpp), &(fdf->mlx.linel),
 								&(fdf->mlx.endian));
-/*
-	t_point	c = centroid(fdf->map);
-	printf("CENTROID x: %d y: %d z: %d", c.x, c.y, c.z);
-*/
+
+	// centre_z = centroid_z(fdf->map);
+	// centre_x = (fdf->map.sizex + 1) / 2;
+	// centre_y = (fdf->map.sizey + 1) / 2;
+	// printf("CENTROID z:%d x:%d y:%d\n", centre_z, centre_x, centre_y);
+
 	draw_mat(fdf);
 	mlx_put_image_to_window(fdf->mlx.mlx, mlx_win, fdf->mlx.img, 0, 0);
 	mlx_loop(fdf->mlx.mlx);
