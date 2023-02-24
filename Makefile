@@ -4,7 +4,7 @@ NAME		= fdf
 
 SOURCES =	colors.c		\
 			draw_fdf.c		\
-			draw_line.c		\
+			draw_line_notre.c		\
 			main.c			\
 			parsing_utils.c \
 			parsing.c		\

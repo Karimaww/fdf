@@ -37,5 +37,9 @@ void	draw_between(t_fdf *fdf, t_vec2 v1, t_vec2 v2)
 	p2.x = vec.x;
 	p2.y = vec.y;
 	p2.color = fdf->map.map[v2.x][v2.y].color;
-	draw_line(fdf, &p1, &p2);
+	if ((p1.x > 0 && p1.x < fdf->mlx.win_size.x
+		&& p1.y > 0 && p1.y < fdf->mlx.win_size.y)
+		|| (p2.x > 0 && p2.x < fdf->mlx.win_size.x
+		&& p2.y > 0 && p2.y < fdf->mlx.win_size.y))
+		draw_line(fdf, p1, p2);
 }
