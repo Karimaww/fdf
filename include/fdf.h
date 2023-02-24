@@ -9,6 +9,7 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include "colors.h"
+# include "events.h"
 
 # define DEFAULT_COLOR 0x0000FF
 # define PI 3.141592654
@@ -42,6 +43,7 @@ typedef struct	s_map
 typedef struct	s_mlx
 {
 	void	*mlx;
+	void	*win;
 	void	*img;
 	char	*addr;
 	int		bpp;
@@ -70,7 +72,6 @@ void	free_map(t_point **map);
 t_fdf	*init_fdf(t_map *map);
 void	pixel_put(t_mlx *mlx, int x, int y, int color);
 void	draw_line(t_fdf *fdf, t_pixel p1, t_pixel p2);
-//void	draw_line(t_fdf *fdf, t_pixel *p1, t_pixel *p2);
 void	draw_fdf(t_fdf *fdf);
 void	draw_between(t_fdf *fdf, t_vec2 v1, t_vec2 v2);
 #endif

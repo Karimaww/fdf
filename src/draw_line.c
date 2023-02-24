@@ -8,94 +8,83 @@ void	pixel_put(t_mlx *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-static void		plot(t_mlx *mlx, t_pixel p, double grad)
+static int set_i_d(int *d)
 {
-	unsigned int	c;
-	unsigned int	shift;
-
-	shift = (int)(0xFF * grad);
-	c = (p.color | (shift << 24));
-	pixel_put(mlx, p.x, p.y, c);
-}
-
-static void		fdf_swap(int *a, int *b)
-{
-	int	c;
-
-	c = *a;
-	*a = *b;
-	*b = c;
-}
-
-static int		get_pixel_color(t_pixel *p1, t_pixel *p2, int mod)
-{
-	t_vec2	r;
-	t_vec2	g;
-	t_vec2	b;
-	int		dist;
-
-	dist = p2->x - p1->x;
-	r.x = (p1->color & 0xFF0000) >> 16;
-	r.y = (p2->color & 0xFF0000) >> 16;
-	g.x = (p1->color & 0x00FF00) >> 8;
-	g.y = (p2->color & 0x00FF00) >> 8;
-	b.x = p1->color & 0x0000FF;
-	b.y = p2->color & 0x0000FF;
-	r.x += ((double)(r.y - r.x) / dist) * mod;
-	g.x += ((double)(g.y - g.x) / dist) * mod;
-	b.x += ((double)(b.y - b.x) / dist) * mod;
-	return ((r.x << 16) + (g.x << 8) + b.x);
-}
-
-double	fpart(double x)
-{
-	return (x > 0 ? x - (int)x : x - (int)x - 1);
-}
-
-static void		drawline(int steep, t_fdf *fdf, t_pixel *p1, t_pixel *p2)
-{
-	int		color;
-	int		x;
-	double	y;
-	double	grad;
-
-	x = p1->x;
-	y = (double)p1->y;
-	grad = p2->x - p1->x
-		? (double)(p2->y - p1->y) / (double)(p2->x - p1->x) : 1;
-	while (x < p2->x)
+	if (*d < 0)
 	{
-		color = get_pixel_color(p1, p2, x - p1->x);
-		if (steep)
+		*d = -(*d);
+		return (-1);
+	}
+	return (1);
+}
+
+void	line_low(t_fdf *fdf, t_pixel p1, t_pixel p2)
+{
+	int	dx;
+	int	dy;
+	int	yi;
+	int	d;
+
+	dx = p2.x - p1.x;
+	dy = p2.y - p1.y;
+	yi = set_i_d(&dy);
+	d = 2 * dy - dx;
+	while (p1.x < p2.x)
+	{
+		pixel_put(&(fdf->mlx), p1.x, p1.y, p1.color);
+		if (d > 0)
 		{
-			plot(&fdf->mlx, (t_pixel){(int)y - 1, x, color}, fpart(y));
-			plot(&fdf->mlx, (t_pixel){(int)y, x, color}, 1 - fpart(y));
+			p1.y += yi;
+			d += 2 * (dy - dx);
 		}
 		else
-		{
-			plot(&fdf->mlx, (t_pixel){x, (int)y - 1, color}, fpart(y));
-			plot(&fdf->mlx, (t_pixel){x, (int)y, color}, 1 - fpart(y));
-		}
-		y += grad;
-		++x;
+			d += 2 * dy;
+		p1.x += 1;
 	}
 }
 
-void	draw_line(t_fdf *fdf, t_pixel *p1, t_pixel *p2)
+void	line_high(t_fdf *fdf, t_pixel p1, t_pixel p2)
 {
-	int	steep;
+	int	dx;
+	int	dy;
+	int	xi;
+	int	d;
 
-	steep = abs(p2->y - p1->y) > abs(p2->x - p1->x);
-	if (steep)
+	dx = p2.x - p1.x;
+	dy = p2.y - p1.y;
+	xi = set_i_d(&dx);
+	d = 2 * dx - dy;
+	while (p1.y < p2.y)
 	{
-		fdf_swap(&p1->x, &p1->y);
-		fdf_swap(&p2->x, &p2->y);
+		pixel_put(&(fdf->mlx), p1.x, p1.y, p1.color);
+		if (d > 0)
+		{
+			p1.x += xi;
+			d += 2 * (dx - dy);
+		}
+		else
+			d += 2 * dx;
+		p1.y += 1;
 	}
-	if (p1->x > p2->x)
+}
+
+/**
+ * reminder: p1.x = x0, p1.y = y0, p2.x = x1, p2.y = y1**/
+void draw_line(t_fdf *fdf, t_pixel p1, t_pixel p2)  
+{
+	if (abs(p2.y - p1.y) < abs(p2.x - p1.x))
 	{
-		fdf_swap(&p1->x, &p2->x);
-		fdf_swap(&p1->y, &p2->y);
-		fdf_swap(&p1->color, &p2->color);
+		
+		if (p1.x > p2.x)
+			line_low(fdf, (t_pixel){p2.x, p2.y, p2.color}, (t_pixel){p1.x, p1.y, p1.color});
+		else
+			line_low(fdf, (t_pixel){p1.x, p1.y, p1.color}, (t_pixel){p2.x, p2.y, p2.color});
 	}
-	drawline(steep, fdf, p1, p2);
+	else
+	{
+		if (p1.y > p2.y)
+			line_high(fdf, (t_pixel){p2.x, p2.y, p2.color}, (t_pixel){p1.x, p1.y, p1.color});
+		else
+			line_high(fdf, (t_pixel){p1.x, p1.y, p1.color}, (t_pixel){p2.x, p2.y, p2.color});
+	}
 }
