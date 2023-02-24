@@ -53,9 +53,9 @@ t_fdf	*init_fdf(t_map *map)
 								&(fdf->mlx.endian));
 	if (fdf->mlx.mlx && fdf->mlx.win)
 	{
-		mlx_hook(fdf->mlx.win, 2, 1L<<0, ft_close, &fdf);
+		mlx_hook(fdf->mlx.win, 2, 1L<<0, ft_close, fdf);
 		// -> BUTTON_PRESS : souris 
-		//mlx_hook(fdf->mlx.win, 4, 1L<<2, ft_close, &fdf);
+		//mlx_hook(fdf->mlx.win, 4, 1L<<2, ft_close, fdf);
 	}
 	draw_fdf(fdf);
 	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.win, fdf->mlx.img, 0, 0);
