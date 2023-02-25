@@ -94,7 +94,7 @@ t_fdf	*init_fdf(t_map *map)
 	{
 		mlx_hook(fdf->mlx.win, 2, 1L<<0, ft_close, fdf);
 		// -> BUTTON_PRESS : souris 
-		//mlx_hook(fdf->mlx.win, 4, 1L<<2, ft_close, &fdf);
+		//mlx_hook(fdf->mlx.win, 4, 1L<<2, ft_close, fdf);
 	}
 	//mlx_key_hook(fdf->mlx.win, key_hook, fdf);
 	//mlx_key_hook(fdf->mlx.win, key_hook_change_color, fdf);
