@@ -38,6 +38,8 @@ void	free_split(char **str)
 	int i;
 
 	i = 0;
+	if (!str)
+		return ;
 	while (str[i])
 	{
 		free(str[i]);
@@ -46,16 +48,17 @@ void	free_split(char **str)
 	free(str);
 }
 
-void	free_map(t_point **map)
+void	free_map(t_point **map, int sizey)
 {
 	int	i;
 
 	i = 0;
-	while (map && map[i])
+	if (!map)
+		return ;
+	while (map && i < sizey)
 	{
 		free(map[i]);
 		i++;
 	}
-	if (map)
-		free(map);
+	free(map);
 }

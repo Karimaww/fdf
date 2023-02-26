@@ -20,13 +20,18 @@ void	print_map(t_map *map)
 int	main(int ac, char **av)
 {
 	t_map	*map;
+	t_fdf	*fdf;
 
 	if (ac != 2)
 		return (write(2, "Error\n", 6), 1);
 	map = parser(av[1]);
 	if (!map)
+	{
+		//free_map(map);
 		return (write(2, "Error\n", 6), 1);
-	print_map(map);
-	init_fdf(map);
+	}
+	//print_map(map);
+	fdf = init_fdf(map);
+	mlx_loop(fdf->mlx.mlx);
 	return (0);
 }
