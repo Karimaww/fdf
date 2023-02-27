@@ -11,7 +11,7 @@
 # include "colors.h"
 # include "events.h"
 
-# define DEFAULT_COLOR 0x0000FF
+# define DEFAULT_COLOR 0xFFFFFF
 # define PI 3.141592654
 
 typedef struct	s_vec2
@@ -59,6 +59,7 @@ typedef struct	s_view
 	double	beta;
 	double	up_down;
 	double	left_right;
+	double	h;
 }	t_view;
 
 typedef struct	s_fdf
@@ -90,4 +91,5 @@ void	hook_zoom(t_fdf *fdf, int keycode);
 void	hook_rot(t_fdf *fdf, int keycode);
 void	hook_up_down(t_fdf *fdf, int keycode);
 void	hook_left_right(t_fdf *fdf, int keycode);
+void	hook_height(t_fdf *fdf, int keycode);
 #endif

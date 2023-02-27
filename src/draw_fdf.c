@@ -75,6 +75,8 @@ int ft_key_choose(int keycode, t_fdf *fdf)
 		hook_up_down(fdf, keycode);
 	if (keycode == LEFT || keycode == RIGHT)
 		hook_left_right(fdf, keycode);
+	if (keycode == HUP || keycode == HDOWN)
+		hook_height(fdf, keycode);
 	clear_screen(fdf);
 	draw_fdf(fdf);
 	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.win, fdf->mlx.img, 0, 0);
@@ -86,6 +88,12 @@ int	render_next_frame(t_fdf *fdf)
 	//printf("hereee\n");
 	draw_fdf(fdf);
 	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.win, fdf->mlx.img, 0, 0);
+	return (0);
+}
+
+int	mouse_hook(t_fdf *fdf)
+{
+	ft_close(fdf);
 	return (0);
 }
 
@@ -106,10 +114,11 @@ t_fdf	*init_fdf(t_map *map)
 	fdf->mlx.addr = mlx_get_data_addr(fdf->mlx.img, &(fdf->mlx.bpp), &(fdf->mlx.linel),
 								&(fdf->mlx.endian));
 	fdf->view.zoom = 10;
-	fdf->view.alpha = asin(tan(PI / 6));
+	fdf->view.alpha = atan(sqrt(2));
 	fdf->view.beta = PI / 4;
 	fdf->view.up_down = 0;
 	fdf->view.left_right = 0;
+	fdf->view.h = 0;
 	//if (fdf->mlx.mlx && fdf->mlx.win)
 	//{
 		// -> BUTTON_PRESS : souris 
@@ -125,9 +134,12 @@ t_fdf	*init_fdf(t_map *map)
 	//mlx_hook(fdf->mlx.win, 2, 1L<<0, ft_close, fdf);
 	draw_fdf(fdf);
 	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.win, fdf->mlx.img, 0, 0);
+	mlx_hook(fdf->mlx.win, 17,  1L<<0, mouse_hook, fdf);
 	mlx_hook(fdf->mlx.win, 2, 1L<<0, ft_key_choose, fdf);
+	
 	//mlx_key_hook(fdf->mlx.win, key_hook_change_color, fdf);
 	//clear all the screen in the hook
 	//put pixel to black and then put the image back
+
 	return (fdf);
 }

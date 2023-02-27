@@ -39,5 +39,7 @@ enum {
 # define RIGHT 100
 # define DOWN 115
 # define UP 119
+# define HUP 49
+# define HDOWN 50
 #endif
 #endif

@@ -12,7 +12,7 @@ void	change_color(t_fdf *fdf)
 	{
 		while (j < fdf->map->sizex)
 		{
-			if (fdf->map->map[i][j].color == 0xFFFF)
+			if (fdf->map->map[i][j].color == 0xFFFFFF)
 				fdf->map->map[i][j].color = DEFAULT_COLOR;
 			else
 				fdf->map->map[i][j].color = 0xFFFF;
@@ -42,9 +42,9 @@ void	hook_rot(t_fdf *fdf, int keycode)
 void	hook_up_down(t_fdf *fdf, int keycode)
 {
 	if (keycode == UP)
-		fdf->view.up_down += 1;
-	if (keycode == DOWN)
 		fdf->view.up_down -= 1;
+	if (keycode == DOWN)
+		fdf->view.up_down += 1;
 }
 
 void	hook_left_right(t_fdf *fdf, int keycode)
@@ -53,4 +53,12 @@ void	hook_left_right(t_fdf *fdf, int keycode)
 		fdf->view.left_right -= 1;
 	if (keycode == RIGHT)
 		fdf->view.left_right += 1;
+}
+
+void	hook_height(t_fdf *fdf, int keycode)
+{
+	if (keycode == HUP)
+		fdf->view.h -= 1;
+	if (keycode == HDOWN)
+		fdf->view.h += 1;
 }

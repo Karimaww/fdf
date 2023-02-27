@@ -24,6 +24,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		return (write(2, "Error\n", 6), 1);
+
 	map = parser(av[1]);
 	if (!map)
 	{
