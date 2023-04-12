@@ -5,7 +5,7 @@ void	change_color(t_fdf *fdf)
 {
 	int	i;
 	int	j;
-	
+
 	i = 0;
 	j = 0;
 	while (i < fdf->map->sizey)
@@ -28,7 +28,7 @@ void	hook_zoom(t_fdf *fdf, int keycode)
 	if (keycode == ARROW_UP)
 		fdf->view.zoom += 0.25;
 	if (keycode == ARROW_DOWN && fdf->view.zoom - 0.25 > 0)
-		fdf->view.zoom -= 0.25;	
+		fdf->view.zoom -= 0.25;
 }
 
 void	hook_rot(t_fdf *fdf, int keycode)
@@ -58,7 +58,7 @@ void	hook_left_right(t_fdf *fdf, int keycode)
 void	hook_height(t_fdf *fdf, int keycode)
 {
 	if (keycode == HUP)
-		fdf->view.h -= 1;
+		fdf->view.h -= 0.1;
 	if (keycode == HDOWN)
-		fdf->view.h += 1;
+		fdf->view.h += 0.1;
 }

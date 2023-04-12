@@ -4,11 +4,12 @@ NAME		= fdf
 
 SOURCES =	colors.c		\
 			draw_fdf.c		\
-			draw_line_notre.c		\
+			draw_line.c		\
 			main.c			\
 			parsing_utils.c \
 			parsing.c		\
 			projection.c	\
+			events.c		\
 
 
 LIBFT		= libft
@@ -38,7 +39,7 @@ obj:
 	mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -L $(LIBFT) -L $(MLX) -lmlx -lft -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(OBJS) -L $(LIBFT) -L $(MLX) -lmlx -lft -L/usr/lib -Imlx -lXext -lX11 -lm -lz -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE)/fdf.h $(INCLUDE)/colors.h 
 	$(CC) $(CFLAGS) -I $(INCLUDE) -Imlx -c $< -o $@

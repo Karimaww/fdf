@@ -99,6 +99,34 @@ int	read_map(t_map	*map, int f)
 	return (EXIT_SUCCESS);
 }
 
+void	find_z_min_max(t_map *map)
+{
+	int	min;
+	int	max;
+	int	x;
+	int	y;
+
+	min = map->map[0][0].z;
+	max = map->map[0][0].z;
+	x = 0;
+	y = 0;
+	while (y < map->sizey)
+	{
+		while (x < map->sizex)
+		{
+			if (map->map[y][x].z < min)
+				min = map->map[y][x].z;
+			if (map->map[y][x].z > max)
+				max = map->map[y][x].z;
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+	map->z_min = min;
+	map->z_max = max;
+}
+
 t_map	*parser(const char *file)
 {
 	t_map	*map;
@@ -114,7 +142,8 @@ t_map	*parser(const char *file)
 	map->sizex = 0;
 	map->sizey = 0;
 	if (read_map(map, f) == EXIT_FAILURE)
-		return (free(map), NULL);	
+		return (free(map), NULL);
+	find_z_min_max(map);
 	close(f);
 	//print_map_me(map->map, map->sizex, map->sizey);
 	return (map);

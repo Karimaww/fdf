@@ -21,25 +21,25 @@ void	draw_fdf(t_fdf *fdf)
 	}
 }
 
-void    clear_screen(t_fdf *fdf)
+void	clear_screen(t_fdf *fdf)
 {
-    int    i;
-    int    j;
+	int	i;
+	int	j;
 
-    i = 0;
-    while (i < fdf->mlx.win_size.y)
-    {
+	i = 0;
+	while (i < fdf->mlx.win_size.y)
+	{
 		j = 0;
-        while (j < fdf->mlx.win_size.x)
-        {
-            pixel_put(&fdf->mlx, j, i, 0);
-            ++j;
-        }
-        ++i;
-    }
+		while (j < fdf->mlx.win_size.x)
+		{
+			pixel_put(&fdf->mlx, j, i, 0);
+			++j;
+		}
+		++i;
+	}
 }
 
-void    ft_close(t_fdf *fdf)
+void	ft_close(t_fdf *fdf)
 {
 	if (fdf->map)
 	{
@@ -60,7 +60,7 @@ void    ft_close(t_fdf *fdf)
 	exit(0);
 }
 
-int ft_key_choose(int keycode, t_fdf *fdf)
+int	ft_key_choose(int keycode, t_fdf *fdf)
 {
 	printf("keycode %d\n", keycode);
 	if (keycode == ESC)
@@ -118,7 +118,7 @@ t_fdf	*init_fdf(t_map *map)
 	fdf->view.beta = PI / 4;
 	fdf->view.up_down = 0;
 	fdf->view.left_right = 0;
-	fdf->view.h = 0;
+	fdf->view.h = 1;
 	//if (fdf->mlx.mlx && fdf->mlx.win)
 	//{
 		// -> BUTTON_PRESS : souris 

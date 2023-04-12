@@ -14,33 +14,35 @@
 # define DEFAULT_COLOR 0xFFFFFF
 # define PI 3.141592654
 
-typedef struct	s_vec2
+typedef struct s_vec2
 {
 	int			x;
 	int			y;
 }				t_vec2;
 
-typedef struct	s_pixel
+typedef struct s_pixel
 {
 	int			x;
 	int			y;
 	int			color;
 }				t_pixel;
 
-typedef struct	s_point
+typedef struct s_point
 {
 	int	z;
 	int	color;
 }				t_point;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	int		sizex;
 	int		sizey;
+	int		z_min;
+	int		z_max;
 	t_point	**map;
 }				t_map;
 
-typedef struct	s_mlx
+typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
@@ -52,7 +54,7 @@ typedef struct	s_mlx
 	t_vec2	win_size;
 }	t_mlx;
 
-typedef struct	s_view
+typedef struct s_view
 {
 	double	zoom;
 	double	alpha;
@@ -62,7 +64,7 @@ typedef struct	s_view
 	double	h;
 }	t_view;
 
-typedef struct	s_fdf
+typedef struct s_fdf
 {
 	t_mlx	mlx;
 	t_map	*map;
