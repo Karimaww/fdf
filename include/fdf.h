@@ -62,6 +62,7 @@ typedef struct s_view
 	double	up_down;
 	double	left_right;
 	double	h;
+	int		grad;
 }	t_view;
 
 typedef struct s_fdf
@@ -87,6 +88,8 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color);
 void	draw_line(t_fdf *fdf, t_pixel p1, t_pixel p2);
 void	draw_fdf(t_fdf *fdf);
 void	draw_between(t_fdf *fdf, t_vec2 v1, t_vec2 v2);
+t_vec2	isometric(t_fdf *fdf, int x, int y, int z);
+int		get_color(t_pixel p, t_pixel p1, t_pixel p2, t_fdf *fdf);
 
 void	change_color(t_fdf *fdf);
 void	hook_zoom(t_fdf *fdf, int keycode);
@@ -94,4 +97,5 @@ void	hook_rot(t_fdf *fdf, int keycode);
 void	hook_up_down(t_fdf *fdf, int keycode);
 void	hook_left_right(t_fdf *fdf, int keycode);
 void	hook_height(t_fdf *fdf, int keycode);
+void	get_orig_color(t_fdf *fdf, int keycode);
 #endif

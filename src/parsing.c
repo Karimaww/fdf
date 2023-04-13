@@ -1,27 +1,8 @@
 #include "../include/fdf.h"
 
-void	print_map_me(t_point **map, int x, int y)
+t_point	**init_point_map(t_point **map, int sizex, int sizey)
 {
-	int i, j;
-	i = 0, j=0;
-
-	while (i < y)
-	{
-		while (j < x)
-		{
-			printf("%d %d\t", map[i][j].z,map[i][j].color);
-			j++;
-		}
-		j = 0;
-		i++;
-		printf("\n");
-	}
-	return;
-}
-
-t_point **init_point_map(t_point **map, int sizex, int sizey)
-{
-	int	i;
+	int		i;
 	t_point	**new_map;
 
 	i = 0;
@@ -68,8 +49,7 @@ int	fill_map(t_map *map, char *line, int x, int y)
 		free_split(sep);
 		i++;
 	}
-	free_split(full);
-	return (0);
+	return (free_split(full), 0);
 }
 
 int	read_map(t_map	*map, int f)
@@ -83,7 +63,7 @@ int	read_map(t_map	*map, int f)
 		return (EXIT_FAILURE);
 	tmp = ft_split(line, ' ');
 	if (!tmp)
-		return (free(line),EXIT_FAILURE);
+		return (free(line), EXIT_FAILURE);
 	map->sizex = len_tab(tmp);
 	map->sizey = 0;
 	while (line)
@@ -135,7 +115,7 @@ t_map	*parser(const char *file)
 	f = open(file, O_RDONLY);
 	if (!f)
 		return (write(2, "Error\n", 6), NULL);
-	map = (t_map*)malloc(sizeof(t_map));
+	map = (t_map *)malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
 	map->map = NULL;
@@ -145,6 +125,5 @@ t_map	*parser(const char *file)
 		return (free(map), NULL);
 	find_z_min_max(map);
 	close(f);
-	//print_map_me(map->map, map->sizex, map->sizey);
 	return (map);
 }

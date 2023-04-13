@@ -2,15 +2,17 @@ CC			= gcc
 
 NAME		= fdf
 
-SOURCES =	colors.c		\
-			draw_fdf.c		\
+SOURCES =	draw_fdf.c		\
 			draw_line.c		\
-			main.c			\
-			parsing_utils.c \
-			parsing.c		\
-			projection.c	\
 			events.c		\
-
+			get_color.c		\
+			hex_to_trgb.c	\
+			init_fdf.c		\
+			isometric.c		\
+			main.c			\
+			mlx_utils.c		\
+			parsing.c		\
+			parsing_utils.c	\
 
 LIBFT		= libft
 
@@ -30,6 +32,8 @@ SRC	=	$(addprefix $(SRC_DIR)/,$(SOURCES))
 OBJS =	$(addprefix $(OBJ_DIR)/,$(SOURCES:.c=.o))
 
 all: lib obj $(NAME)
+
+bonus: lib obj $(NAME)
 
 lib:
 	@make -C $(LIBFT)

@@ -2,7 +2,7 @@
 
 t_point	**copy_map(t_point **src, t_point **dest, int x, int y)
 {
-	int i;
+	int	i;
 	int	j;
 
 	i = 0;
@@ -23,9 +23,9 @@ t_point	**copy_map(t_point **src, t_point **dest, int x, int y)
 	return (dest);
 }
 
-int		len_tab(char **tab)
+int	len_tab(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tab && tab[i])
@@ -35,7 +35,7 @@ int		len_tab(char **tab)
 
 void	free_split(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!str)

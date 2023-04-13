@@ -2,8 +2,11 @@
 
 void	print_map(t_map *map)
 {
-	int x = 0;
-	int y = 0;
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
 	while (y < map->sizey)
 	{
 		while (x < map->sizex)
@@ -24,14 +27,9 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		return (write(2, "Error\n", 6), 1);
-
 	map = parser(av[1]);
 	if (!map)
-	{
-		//free_map(map);
 		return (write(2, "Error\n", 6), 1);
-	}
-	//print_map(map);
 	fdf = init_fdf(map);
 	mlx_loop(fdf->mlx.mlx);
 	return (0);
