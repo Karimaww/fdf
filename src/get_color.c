@@ -3,7 +3,7 @@
 void	get_orig_color(t_fdf *fdf, int keycode)
 {
 	if (keycode == SPACE)
-		fdf->view.grad += 1 % 3;
+		fdf->view.grad = (fdf->view.grad + 1) % 2;
 }
 
 int	create_rgb(int r, int g, int b)
@@ -16,7 +16,7 @@ int	get_color(t_pixel p, t_pixel p1, t_pixel p2, t_fdf *fdf)
 	int	color;
 
 	if (fdf->view.grad == 0)
-		return (p1.color);
+		return (p.color);
 	if (p2.x - p1.x == 0 && p2.y - p1.y == 0)
 		color = 1;
 	else if (p2.x - p1.x != 0)

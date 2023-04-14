@@ -1,5 +1,26 @@
 #include "../include/fdf.h"
 
+void	ft_close(t_fdf *fdf)
+{
+	if (fdf->map)
+	{
+		free_map(fdf->map->map, fdf->map->sizey);
+		free(fdf->map);
+	}
+	if (fdf->mlx.img)
+		mlx_destroy_image(fdf->mlx.mlx, fdf->mlx.img);
+	if (fdf->mlx.win)
+		mlx_destroy_window(fdf->mlx.mlx, fdf->mlx.win);
+	if (fdf->mlx.mlx)
+	{
+		mlx_destroy_display(fdf->mlx.mlx);
+		free(fdf->mlx.mlx);
+	}
+	if (fdf)
+		free(fdf);
+	exit(0);
+}
+
 void	clear_screen(t_fdf *fdf)
 {
 	int	i;

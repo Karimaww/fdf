@@ -98,4 +98,12 @@ void	hook_up_down(t_fdf *fdf, int keycode);
 void	hook_left_right(t_fdf *fdf, int keycode);
 void	hook_height(t_fdf *fdf, int keycode);
 void	get_orig_color(t_fdf *fdf, int keycode);
+
+/*-----mlx utils-----*/
+int		mouse_hook(t_fdf *fdf);
+int		render_next_frame(t_fdf *fdf);
+int		ft_key_choose(int keycode, t_fdf *fdf);
+void	clear_screen(t_fdf *fdf);
+void	ft_close(t_fdf *fdf);
+
 #endif
