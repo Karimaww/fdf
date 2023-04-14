@@ -13,6 +13,7 @@ SOURCES =	draw_fdf.c		\
 			mlx_utils.c		\
 			parsing.c		\
 			parsing_utils.c	\
+			color_theme.c	\
 
 LIBFT		= libft
 

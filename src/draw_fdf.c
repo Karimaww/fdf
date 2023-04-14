@@ -1,15 +1,10 @@
 #include "../include/fdf.h"
 
-void	choose_color(t_fdf *fdf, t_pixel *p, t_vec2 v)
+int	ft_abs(int n)
 {
-	if (fdf->map->z_min - fdf->map->z_max == 0 && fdf->view.grad != 0)
-		p->color = 255;
-	else if (fdf->map->z_min - fdf->map->z_max != 0 && fdf->view.grad != 0)
-		p->color = (float)255 * ((float)(fdf->map->map[v.x][v.y].z
-					- fdf->map->z_min) / (float)(fdf->map->z_max
-					- fdf->map->z_min));
-	else
-		p->color = fdf->map->map[v.x][v.y].color;
+	if (n < 0)
+		return (-n);
+	return (n);
 }
 
 void	draw_between(t_fdf *fdf, t_vec2 v1, t_vec2 v2)
@@ -21,11 +16,12 @@ void	draw_between(t_fdf *fdf, t_vec2 v1, t_vec2 v2)
 	vec = isometric(fdf, v1.x, v1.y, fdf->map->map[v1.x][v1.y].z);
 	p1.x = vec.x + fdf->view.left_right * fdf->view.zoom;
 	p1.y = vec.y;
-	choose_color(fdf, &p1, v1);
+
+	fdf->theme(fdf, &p1, v1);
 	vec = isometric(fdf, v2.x, v2.y, fdf->map->map[v2.x][v2.y].z);
 	p2.x = vec.x + fdf->view.left_right * fdf->view.zoom;
 	p2.y = vec.y;
-	choose_color(fdf, &p2, v2);
+	fdf->theme(fdf, &p2, v2);
 	if ((p1.x > 0 && p1.x < fdf->mlx.win_size.x
 			&& p1.y > 0 && p1.y < fdf->mlx.win_size.y)
 		|| (p2.x > 0 && p2.x < fdf->mlx.win_size.x

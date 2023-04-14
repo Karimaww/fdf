@@ -42,7 +42,7 @@ int	fill_map(t_map *map, char *line, int x, int y)
 			return (free_split(sep), 1);
 		point.z = ft_atoi(sep[0]);
 		if (sep[1])
-			point.color = hex_to_trgb(sep[1] + 3);
+			point.color = hex_to_trgb(sep[1] + 2);
 		else
 			point.color = DEFAULT_COLOR;
 		map->map[y - 1][i] = point;

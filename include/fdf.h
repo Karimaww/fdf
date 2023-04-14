@@ -70,6 +70,7 @@ typedef struct s_fdf
 	t_mlx	mlx;
 	t_map	*map;
 	t_view	view;
+	void	(*theme)(struct s_fdf *, t_pixel *, t_vec2);
 }	t_fdf;
 
 /*-----parser utils----*/
@@ -89,15 +90,17 @@ void	draw_line(t_fdf *fdf, t_pixel p1, t_pixel p2);
 void	draw_fdf(t_fdf *fdf);
 void	draw_between(t_fdf *fdf, t_vec2 v1, t_vec2 v2);
 t_vec2	isometric(t_fdf *fdf, int x, int y, int z);
-int		get_color(t_pixel p, t_pixel p1, t_pixel p2, t_fdf *fdf);
 
+int		create_rgb(int r, int g, int b);
 void	change_color(t_fdf *fdf);
 void	hook_zoom(t_fdf *fdf, int keycode);
 void	hook_rot(t_fdf *fdf, int keycode);
 void	hook_up_down(t_fdf *fdf, int keycode);
 void	hook_left_right(t_fdf *fdf, int keycode);
 void	hook_height(t_fdf *fdf, int keycode);
-void	get_orig_color(t_fdf *fdf, int keycode);
+void	get_orig_color(t_fdf *fdf);
+int		get_color(t_pixel p1, t_pixel p2, float dist);
+float	get_dist(t_pixel p1, t_pixel p2);
 
 /*-----mlx utils-----*/
 int		mouse_hook(t_fdf *fdf);
@@ -106,4 +109,8 @@ int		ft_key_choose(int keycode, t_fdf *fdf);
 void	clear_screen(t_fdf *fdf);
 void	ft_close(t_fdf *fdf);
 
+/*-----color themes-----*/
+void	default_theme(t_fdf *fdf, t_pixel *p, t_vec2 v);
+void	rainbow_theme(t_fdf *fdf, t_pixel *p, t_vec2 v);
+void	viol_yell_theme(t_fdf *fdf, t_pixel *p, t_vec2 v);
 #endif

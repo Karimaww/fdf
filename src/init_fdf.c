@@ -28,6 +28,7 @@ t_fdf	*init_fdf(t_map *map)
 			fdf->mlx.win_size.y);
 	fdf->mlx.addr = mlx_get_data_addr(fdf->mlx.img, &(fdf->mlx.bpp),
 			&(fdf->mlx.linel), &(fdf->mlx.endian));
+	fdf->theme = &default_theme;
 	init_view(fdf);
 	draw_fdf(fdf);
 	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.win, fdf->mlx.img, 0, 0);

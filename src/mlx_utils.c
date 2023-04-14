@@ -45,7 +45,7 @@ int	ft_key_choose(int keycode, t_fdf *fdf)
 	if (keycode == ESC)
 		ft_close(fdf);
 	if (keycode == SPACE)
-		get_orig_color(fdf, keycode);
+		get_orig_color(fdf);
 	if (keycode == ARROW_UP || keycode == ARROW_DOWN)
 		hook_zoom(fdf, keycode);
 	if (keycode == ARROW_LEFT || keycode == ARROW_RIGHT)

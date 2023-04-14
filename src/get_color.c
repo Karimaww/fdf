@@ -1,9 +1,13 @@
 #include "../include/fdf.h"
 
-void	get_orig_color(t_fdf *fdf, int keycode)
+void	get_orig_color(t_fdf *fdf)
 {
-	if (keycode == SPACE)
-		fdf->view.grad = (fdf->view.grad + 1) % 2;
+	if (fdf->theme == &default_theme)
+		fdf->theme = &rainbow_theme;
+	else if (fdf->theme == &rainbow_theme)
+		fdf->theme = &viol_yell_theme;
+	else
+		fdf->theme = &default_theme;
 }
 
 int	create_rgb(int r, int g, int b)
@@ -11,21 +15,34 @@ int	create_rgb(int r, int g, int b)
 	return (r << 16 | g << 8 | b);
 }
 
-int	get_color(t_pixel p, t_pixel p1, t_pixel p2, t_fdf *fdf)
+int	get_rgb(int color, int i)
 {
-	int	color;
+	if (i == 1)
+		return ((color & 0xFF0000) >> 16);
+	if (i == 2)
+		return ((color & 0xFF00) >> 8);
+	return (color & 0xFF);
+}
 
-	if (fdf->view.grad == 0)
-		return (p.color);
-	if (p2.x - p1.x == 0 && p2.y - p1.y == 0)
-		color = 1;
-	else if (p2.x - p1.x != 0)
-		color = (float)((p.x - p1.x) * (p2.color - p1.color)
-				/ (p2.x - p1.x)) + p1.color;
-	else
-		color = (float)((p.y - p1.y) * (p2.color - p1.color)
-				/ (p2.y - p1.y)) + p1.color;
-	if (color < 127)
-		return (create_rgb(255, color * 2, 0));
-	return (create_rgb(255, 255, color * 2));
+float	get_dist(t_pixel p1, t_pixel p2)
+{
+	return (sqrt((p1.x - p2.x) * (p1.x - p2.x)
+			+ (p1.y - p2.y) * (p1.y - p2.y)));
+}
+
+int	get_color(t_pixel p1, t_pixel p2, float dist)
+{
+	int				r;
+	int				g;
+	int				b;
+	float			perc;
+
+	perc = 1 - get_dist(p1, p2) / dist;
+	r = get_rgb(p1.color, 1) + perc
+		* (get_rgb(p2.color, 1) - get_rgb(p1.color, 1));
+	g = get_rgb(p1.color, 2) + perc
+		* (get_rgb(p2.color, 2) - get_rgb(p1.color, 2));
+	b = get_rgb(p1.color, 3) + perc
+		* (get_rgb(p2.color, 3) - get_rgb(p1.color, 3));
+	return (r << 16 | g << 8 | b);
 }
