@@ -34,11 +34,10 @@ t_vec2	isometric(t_fdf *fdf, int x, int y, int z)
 	y -= fdf->map->sizey / 2;
 	x *= fdf->view.zoom;
 	y *= fdf->view.zoom;
-	z *= fdf->view.zoom * 4 / 10;
+	z *= fdf->view.zoom * 4 / 10 * fdf->view.h;
 	x_p += x * cos(fdf->view.theta) * cos(fdf->view.beta);
 	x_p -= z * sin(fdf->view.beta);
 	x_p -= y * sin(fdf->view.theta) * cos(fdf->view.beta);
-
 	y_p = 0;
 	y_p += x * sin(fdf->view.theta) * cos(fdf->view.alpha);
 	y_p += y * cos(fdf->view.theta) * cos(fdf->view.alpha);
@@ -47,8 +46,7 @@ t_vec2	isometric(t_fdf *fdf, int x, int y, int z)
 	y_p -= y * sin(fdf->view.theta) * sin(fdf->view.beta)
 		* sin(fdf->view.alpha);
 	y_p += z * cos(fdf->view.beta) * sin(fdf->view.alpha);
-
-	v.x = fdf->mlx.win_size.x / 2 + x_p ;
+	v.x = fdf->mlx.win_size.x / 2 + x_p;
 	v.y = fdf->mlx.win_size.y / 2 + y_p;
 	return (v);
 }

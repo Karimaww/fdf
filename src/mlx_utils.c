@@ -39,33 +39,27 @@ void	clear_screen(t_fdf *fdf)
 	}
 }
 
-int	ft_key_choose(int keycode, t_fdf *fdf)
+int	ft_key_choose(int key, t_fdf *fdf)
 {
-	printf("keycode %d\n", keycode);
-	if (keycode == ESC)
+	printf("keycode %d\n", key);
+	if (key == ESC)
 		ft_close(fdf);
-	if (keycode == SPACE)
+	if (key == SPACE)
 		get_orig_color(fdf);
-	if (keycode == ARROW_UP || keycode == ARROW_DOWN)
-		hook_zoom(fdf, keycode);
-	if (keycode == ARROW_LEFT || keycode == ARROW_RIGHT || keycode == R)
-		hook_rot(fdf, keycode);
-	if (keycode == UP || keycode == DOWN)
-		hook_up_down(fdf, keycode);
-	if (keycode == LEFT || keycode == RIGHT)
-		hook_left_right(fdf, keycode);
-	if (keycode == HUP || keycode == HDOWN)
-		hook_height(fdf, keycode);
+	if (key == ARROW_UP || key == ARROW_DOWN)
+		hook_zoom(fdf, key);
+	if (key == ARROW_LEFT || key == ARROW_RIGHT || key == R || key == T)
+		hook_rot(fdf, key);
+	if (key == UP || key == DOWN)
+		hook_up_down(fdf, key);
+	if (key == LEFT || key == RIGHT)
+		hook_left_right(fdf, key);
+	if (key == HUP || key == HDOWN)
+		hook_height(fdf, key);
 	clear_screen(fdf);
 	draw_fdf(fdf);
 	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.win, fdf->mlx.img, 0, 0);
-	return (0);
-}
-
-int	render_next_frame(t_fdf *fdf)
-{
-	draw_fdf(fdf);
-	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.win, fdf->mlx.img, 0, 0);
+	put_info(fdf);
 	return (0);
 }
 

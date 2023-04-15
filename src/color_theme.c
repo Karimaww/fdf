@@ -56,4 +56,3 @@ void	viol_yell_theme(t_fdf *fdf, t_pixel *p, t_vec2 v)
 	else
 		p->color = create_rgb(196, 0, 185);
 }
-

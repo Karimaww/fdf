@@ -86,6 +86,7 @@ void	free_map(t_point **map, int sizey);
 
 /*-----line utils----*/
 t_fdf	*init_fdf(t_map *map);
+void	put_info(t_fdf *fdf);
 void	pixel_put(t_mlx *mlx, int x, int y, int color);
 void	draw_line(t_fdf *fdf, t_pixel p1, t_pixel p2);
 void	draw_fdf(t_fdf *fdf);
@@ -106,7 +107,7 @@ float	get_dist(t_pixel p1, t_pixel p2);
 /*-----mlx utils-----*/
 int		mouse_hook(t_fdf *fdf);
 int		render_next_frame(t_fdf *fdf);
-int		ft_key_choose(int keycode, t_fdf *fdf);
+int		ft_key_choose(int key, t_fdf *fdf);
 void	clear_screen(t_fdf *fdf);
 void	ft_close(t_fdf *fdf);
 

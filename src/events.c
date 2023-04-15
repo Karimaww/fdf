@@ -11,11 +11,13 @@ void	hook_zoom(t_fdf *fdf, int keycode)
 void	hook_rot(t_fdf *fdf, int keycode)
 {
 	if (keycode == ARROW_LEFT)
-		fdf->view.alpha -= PI / 24;
+		fdf->view.alpha -= PI / 36;
 	if (keycode == ARROW_RIGHT && fdf->view.zoom - 0.25 > 0)
-		fdf->view.alpha += PI / 24;
+		fdf->view.alpha += PI / 36;
 	if (keycode == R)
-		fdf->view.theta += PI / 24;
+		fdf->view.theta += PI / 36;
+	if (keycode == T)
+		fdf->view.theta -= PI / 36;
 }
 
 void	hook_up_down(t_fdf *fdf, int keycode)

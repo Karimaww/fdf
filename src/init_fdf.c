@@ -6,10 +6,25 @@ void	init_view(t_fdf *fdf)
 	fdf->view.alpha = 20 * PI / 180;
 	fdf->view.beta = PI;
 	fdf->view.theta = 85 * PI / 180;
-	fdf->view.up_down = 0;
-	fdf->view.left_right = 0;
-	fdf->view.h = 0.1;
+	fdf->view.up_down = 2;
+	fdf->view.left_right = -4;
+	fdf->view.h = 1.5;
 	fdf->view.grad = 0;
+}
+
+void	put_txt(t_fdf *fdf, char *txt, int x, int y)
+{
+	char	*text;
+
+	text = ft_strdup(txt);
+	mlx_string_put(fdf->mlx.mlx, fdf->mlx.win, x, y,
+		0xFFFFFF, text);
+	free(text);
+}
+
+void	put_info(t_fdf *fdf)
+{
+	put_txt(fdf, "----INFO----", 50, 50);
 }
 
 t_fdf	*init_fdf(t_map *map)
@@ -20,11 +35,11 @@ t_fdf	*init_fdf(t_map *map)
 	if (!fdf)
 		return (NULL);
 	fdf->map = map;
-	fdf->mlx.win_size.x = 1800;
-	fdf->mlx.win_size.y = 900;
+	fdf->mlx.win_size.x = 1200;
+	fdf->mlx.win_size.y = 800;
 	fdf->mlx.mlx = mlx_init();
 	fdf->mlx.win = mlx_new_window(fdf->mlx.mlx, fdf->mlx.win_size.x,
-			fdf->mlx.win_size.y, "Our first FDF");
+			fdf->mlx.win_size.y, "FDF");
 	fdf->mlx.img = mlx_new_image(fdf->mlx.mlx, fdf->mlx.win_size.x,
 			fdf->mlx.win_size.y);
 	fdf->mlx.addr = mlx_get_data_addr(fdf->mlx.img, &(fdf->mlx.bpp),
@@ -33,6 +48,7 @@ t_fdf	*init_fdf(t_map *map)
 	init_view(fdf);
 	draw_fdf(fdf);
 	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.win, fdf->mlx.img, 0, 0);
+	put_info(fdf);
 	mlx_hook(fdf->mlx.win, 17, 1L << 0, mouse_hook, fdf);
 	mlx_hook(fdf->mlx.win, 2, 1L << 0, ft_key_choose, fdf);
 	return (fdf);

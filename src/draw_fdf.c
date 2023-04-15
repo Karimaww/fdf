@@ -16,7 +16,6 @@ void	draw_between(t_fdf *fdf, t_vec2 v1, t_vec2 v2)
 	vec = isometric(fdf, v1.x, v1.y, fdf->map->map[v1.x][v1.y].z);
 	p1.x = vec.x + fdf->view.left_right * fdf->view.zoom;
 	p1.y = vec.y + fdf->view.up_down * fdf->view.zoom;
-
 	fdf->theme(fdf, &p1, v1);
 	vec = isometric(fdf, v2.x, v2.y, fdf->map->map[v2.x][v2.y].z);
 	p2.x = vec.x + fdf->view.left_right * fdf->view.zoom;
