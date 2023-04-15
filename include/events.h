@@ -41,5 +41,6 @@ enum {
 # define UP 119
 # define HUP 49
 # define HDOWN 50
+# define R 114
 #endif
 #endif

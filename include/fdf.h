@@ -59,6 +59,7 @@ typedef struct s_view
 	double	zoom;
 	double	alpha;
 	double	beta;
+	double	theta;
 	double	up_down;
 	double	left_right;
 	double	h;
