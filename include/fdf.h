@@ -8,11 +8,12 @@
 # include "../mlx/mlx.h"
 # include <stdbool.h>
 # include <stdio.h>
-# include "colors.h"
 # include "events.h"
 
 # define DEFAULT_COLOR 0xFFFFFF
 # define PI 3.141592654
+# define INT_MAX 2147483647
+# define INT_MIN -2147483648
 
 typedef struct s_vec2
 {
@@ -115,4 +116,5 @@ void	ft_close(t_fdf *fdf);
 void	default_theme(t_fdf *fdf, t_pixel *p, t_vec2 v);
 void	rainbow_theme(t_fdf *fdf, t_pixel *p, t_vec2 v);
 void	viol_yell_theme(t_fdf *fdf, t_pixel *p, t_vec2 v);
+int		hex_to_trgb(char *value);
 #endif

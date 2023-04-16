@@ -41,7 +41,6 @@ void	clear_screen(t_fdf *fdf)
 
 int	ft_key_choose(int key, t_fdf *fdf)
 {
-	printf("keycode %d\n", key);
 	if (key == ESC)
 		ft_close(fdf);
 	if (key == SPACE)
@@ -59,7 +58,6 @@ int	ft_key_choose(int key, t_fdf *fdf)
 	clear_screen(fdf);
 	draw_fdf(fdf);
 	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.win, fdf->mlx.img, 0, 0);
-	put_info(fdf);
 	return (0);
 }
 

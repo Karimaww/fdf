@@ -12,23 +12,12 @@ enum {
 	ON_DESTROY = 17
 };
 
-// EVENTS
 # define KEYPRESS 2
 # define KEYRELEASE 3
 # define BUTTONPRESS 4
 # define BUTTONRELEASE 5
+# define MKEYPRESS 1L
 
-// EVENT MASKS
-# define MKEYPRESS (1L<<0)
-# define MKEYRELEASE (1L<<1)
-# define MBUTTONPRESS (1L<<2)
-# define MBUTTONRELEASE (1L<<3)
-
-// KEYCODES ON MAC
-#ifdef __APPLE__
-# define ESC 53
-# define SPACE 49
-#else
 # define ESC 65307
 # define SPACE 32
 # define ARROW_UP 65362
@@ -43,5 +32,4 @@ enum {
 # define HDOWN 50
 # define R 114
 # define T 116
-#endif
 #endif

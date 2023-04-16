@@ -12,21 +12,6 @@ void	init_view(t_fdf *fdf)
 	fdf->view.grad = 0;
 }
 
-void	put_txt(t_fdf *fdf, char *txt, int x, int y)
-{
-	char	*text;
-
-	text = ft_strdup(txt);
-	mlx_string_put(fdf->mlx.mlx, fdf->mlx.win, x, y,
-		0xFFFFFF, text);
-	free(text);
-}
-
-void	put_info(t_fdf *fdf)
-{
-	put_txt(fdf, "----INFO----", 50, 50);
-}
-
 t_fdf	*init_fdf(t_map *map)
 {
 	t_fdf	*fdf;
@@ -48,8 +33,7 @@ t_fdf	*init_fdf(t_map *map)
 	init_view(fdf);
 	draw_fdf(fdf);
 	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.win, fdf->mlx.img, 0, 0);
-	put_info(fdf);
-	mlx_hook(fdf->mlx.win, 17, 1L << 0, mouse_hook, fdf);
-	mlx_hook(fdf->mlx.win, 2, 1L << 0, ft_key_choose, fdf);
+	mlx_hook(fdf->mlx.win, ON_DESTROY, MKEYPRESS, mouse_hook, fdf);
+	mlx_hook(fdf->mlx.win, ON_KEYDOWN, MKEYPRESS, ft_key_choose, fdf);
 	return (fdf);
 }
